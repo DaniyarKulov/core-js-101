@@ -7,7 +7,6 @@
  *                                                                                            *
  ******************************************************************************************** */
 
-
 /**
  * Returns an index of the specified element in array or -1 if element is not found
  *
@@ -45,7 +44,6 @@ function generateOdds(len) {
   return a;
 }
 
-
 /**
  * Returns the doubled array - elements of the specified array
  * are repeated twice using original order
@@ -62,7 +60,6 @@ function doubleArray(arr) {
   arr.map((elem) => arr.push(elem));
   return arr;
 }
-
 
 /**
  * Returns an array of positive numbers from the specified array in original order
@@ -126,7 +123,6 @@ function getUpperCaseStrings(arr) {
   return arr.map((a) => a.toUpperCase());
 }
 
-
 /**
  * Returns the array of string lengths from the specified string array.
  *
@@ -140,7 +136,6 @@ function getUpperCaseStrings(arr) {
 function getStringsLength(arr) {
   return arr.map((a) => a.length);
 }
-
 
 /**
  * Inserts the item into specified array at specified index
@@ -187,7 +182,6 @@ function getTail(arr, n) {
   return arr.slice(-n);
 }
 
-
 /**
  * Returns CSV representation of two-dimensional numeric array.
  * https://en.wikipedia.org/wiki/Comma-separated_values
@@ -227,7 +221,6 @@ function toArrayOfSquares(arr) {
   return arr.map((a) => a * a);
 }
 
-
 /**
  * Transforms the numeric array to the according moving sum array:
  *     f[n] = x[0] + x[1] + x[2] +...+ x[n]
@@ -242,8 +235,11 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-
+function getMovingSum(arr) {
+  return arr.reduce((acc, a, i) => {
+    if (i > 0) acc[i] += acc[i - 1];
+    return acc;
+  }, arr);
 }
 
 /**
@@ -261,7 +257,6 @@ function getSecondItems(arr) {
   return arr.filter((a, b) => b % 2 !== 0);
 }
 
-
 /**
  * Propagates every item in sequence its position times
  * Returns an array that consists of: one first item, two second items, tree third items etc.
@@ -276,10 +271,9 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  return arr.flatMap((a, i) => Array.from({ length: i + 1 }).fill(a));
 }
-
 
 /**
  * Returns the 3 largest numbers from the specified array
@@ -297,7 +291,6 @@ function propagateItemsByPositionIndex(/* arr */) {
 function get3TopItems(arr) {
   return arr.reverse().filter((elem, index) => index < 3);
 }
-
 
 /**
  * Returns the number of positive numbers from specified array
@@ -335,7 +328,18 @@ function getPositivesCount(arr) {
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
 function sortDigitNamesByNumericOrder(arr) {
-  const numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  const numbers = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
   return arr.sort((a, b) => numbers.indexOf(a) - numbers.indexOf(b));
 }
 
@@ -404,7 +408,6 @@ function toStringList(arr) {
   return arr.join();
 }
 
-
 /**
  * Sorts the specified array by country name first and city name
  * (if countries are equal) in ascending order.
@@ -431,7 +434,22 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => {
+    if (a.country < b.country) {
+      return -1;
+    }
+    if (a.country > b.country) {
+      return 1;
+    }
+    if (a.city < b.city) {
+      return -1;
+    }
+    if (a.city > b.city) {
+      return 1;
+    }
+    return 0;
+  });
 }
 
 /**
@@ -529,7 +547,6 @@ function group(/* array, keySelector, valueSelector */) {
   throw new Error('Not implemented');
 }
 
-
 /**
  * Projects each element of the specified array to a sequence
  * and flattens the resulting sequences into one array.
@@ -549,7 +566,6 @@ function selectMany(arr, childrenSelector) {
   return array;
 }
 
-
 /**
  * Returns an element from the multidimensional array by the specified indexes.
  *
@@ -565,7 +581,6 @@ function selectMany(arr, childrenSelector) {
 function getElementByIndexes(arr, indexes) {
   return indexes.reduce((a, b) => a[b], arr);
 }
-
 
 /**
  * Swaps the head and tail of the specified array:
@@ -589,7 +604,7 @@ function swapHeadAndTail(arr) {
   let array;
   const lenght = arr.length;
   const end = arr.slice(-(lenght / 2));
-  const start = arr.slice(0, (lenght / 2));
+  const start = arr.slice(0, lenght / 2);
   if (lenght % 2 !== 0 && lenght > 1) {
     array = [...end, arr[Math.floor(lenght / 2)], ...start];
     return array;
@@ -597,7 +612,6 @@ function swapHeadAndTail(arr) {
   array = [...end, ...start];
   return array;
 }
-
 
 module.exports = {
   findElement,

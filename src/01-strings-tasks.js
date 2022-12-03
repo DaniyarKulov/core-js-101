@@ -5,7 +5,6 @@
  *                                                                                           *
  ******************************************************************************************* */
 
-
 /**
  * Returns the result of concatenation of two strings.
  *
@@ -21,7 +20,6 @@
 function concatenateStrings(value1, value2) {
   return value1 + value2;
 }
-
 
 /**
  * Returns the length of given string.
@@ -68,7 +66,6 @@ function getStringFromTemplate(firstName, lastName) {
 function extractNameFromTemplate(value) {
   return value.substr(7).replace('!', '');
 }
-
 
 /**
  * Returns a first char of the given string.
@@ -145,7 +142,6 @@ function unbracketTag(str) {
   return str.slice(1, -1);
 }
 
-
 /**
  * Converts all characters of the specified string into the upper case
  *
@@ -202,10 +198,12 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const a = `┌${'─'.repeat(width - 2)}┐\n`;
+  const b = `│${' '.repeat(width - 2)}│\n`;
+  const c = `└${'─'.repeat(width - 2)}┘\n`;
+  return a.concat('', b.repeat(height - 2), c);
 }
-
 
 /**
  * Encode specified string with ROT13 cipher
@@ -223,8 +221,26 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ?!'.split('');
+  const b = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm ?!'.split('');
+  const c = [];
+  for (let i = 0; i < str.length; i += 1) {
+    a.forEach((el, index) => {
+      if (str[i] === el) {
+        c.push(index);
+      }
+    });
+  }
+  const x = [];
+  for (let i = 0; i < c.length; i += 1) {
+    b.forEach((el, index) => {
+      if (index === c[i]) {
+        x.push(el);
+      }
+    });
+  }
+  return x.join('');
 }
 
 /**
@@ -243,7 +259,6 @@ function encodeToRot13(/* str */) {
 function isString(value) {
   return value ? typeof value.valueOf() === 'string' : false;
 }
-
 
 /**
  * Returns playid card id.
@@ -269,10 +284,8 @@ function isString(value) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
-}
 
+function getCardId(/** value */) {}
 
 module.exports = {
   concatenateStrings,
